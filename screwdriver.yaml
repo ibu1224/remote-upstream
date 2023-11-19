@@ -1,0 +1,19 @@
+shared:
+  image: node:18
+jobs:
+  main:
+    requires: [~commit]
+    steps:
+      - echo "hello"
+  A:
+    requires: [main]
+    steps:
+      - echo "hello"
+  B:
+    requires: [main]
+    steps:
+      - echo "hello"
+  C:
+    requires: [main]
+    steps:
+      - echo "hello"
