@@ -17,3 +17,24 @@ jobs:
     requires: [main]
     steps:
       - echo "hello"
+      - if [ -z "$MY_ENV_VAR" ]; then echo "環境変数 MY_ENV_VAR が設定されていません。"; exit 1; fi
+    secrets:
+      - TEST
+      
+
+  upA:
+    requires: [~sd@12594:downA]
+    steps:
+      - echo "hello"
+  upB:
+    requires: [~sd@12594:downB]
+    steps:
+      - echo "hello"
+  upC:
+    requires: [~sd@12594:downC]
+    steps:
+      - echo "hello"
+  TARGET:
+    requires: [upA, upB, upC]
+    steps:
+      - echo "hello"
