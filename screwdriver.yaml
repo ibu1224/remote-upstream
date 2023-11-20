@@ -1,6 +1,15 @@
 shared:
   image: node:18
 jobs:
+  deploy:
+    requires: [~commit]
+    steps:
+      - echo "hello"
+  check:
+    requires: [~deploy]
+    steps:
+      - echo "hello"
+      - if [ -z "$DEPLOY" ]; then echo "環境変数が設定されていません。"; exit 1; fi
   main:
     requires: [~commit]
     steps:
@@ -17,9 +26,13 @@ jobs:
     requires: [main]
     steps:
       - echo "hello"
-      - if [ -z "$TEST" ]; then echo "環境変数 MY_ENV_VAR が設定されていません。"; exit 1; fi
+      - if [ -z "$TEST" ]; then echo "環境変数が設定されていません。"; exit 1; fi
     secrets:
       - TEST
+  D:
+    requires: [main]
+    steps:
+      - echo "hello"
       
 
   upA:
@@ -34,7 +47,11 @@ jobs:
     requires: [~sd@12594:downC]
     steps:
       - echo "hello"
+  upD:
+    requires: [~sd@12594:downD]
+    steps:
+      - echo "hello"
   TARGET:
-    requires: [upA, upB, upC]
+    requires: [upA, upB, upC, upD]
     steps:
       - echo "hello"
